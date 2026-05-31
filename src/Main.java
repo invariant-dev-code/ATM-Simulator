@@ -5,11 +5,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
 
-        int correctPin = 2019;
-        int attemps = 0;
-        boolean blocked = false;
+        Account account = new Account(1234, 1000);
 
-        double balance = 10000.00;
+        int attemps = 0;
 
         ArrayList<String> transactionHistory = new ArrayList<>();
 
@@ -18,7 +16,7 @@ public class Main {
             System.out.print("Enter your PIN: ");
             int enterPin = scn.nextInt();
 
-            if (enterPin == correctPin) {
+            if (enterPin == account.getPin()) {
                 System.out.println("Login successful!");
                 break;
             } else {
@@ -28,15 +26,10 @@ public class Main {
         }
         // Block account
         if (attemps == 3) {
-            blocked = true;
-        }
-
-        if (blocked) {
+            account.setBlocked(true);
             System.out.println("Your account has been blocked!");
-            scn.close();
             return;
         }
-
 
         System.out.println("Login succesful");
 
@@ -57,26 +50,15 @@ public class Main {
 
             switch (choice) {
                 case 1: {
-                    System.out.println("Current Balance: $" + balance);
+                    System.out.println("Balance: " + account.getBalance() + "$");
                     break;
                 }
                 case 2: {
                     System.out.print("Enter deposit amount: ");
                     double deposit = scn.nextDouble();
 
-                    if (deposit > 0) {
-                        balance += deposit;
-                        System.out.println("Money deposited successfully!");
-                        System.out.println("New Balance: $" + balance);
-
-                        transactionHistory.add(
-                                "Deposited: " + deposit + "$"
-                        );
-
-                    } else {
-                        System.out.println("Invalid amount!");
-                    }
-
+                    account.deposit(deposit);
+                    System.out.println("Money deposited successfully!");
                     break;
                 }
                 case 3: {
@@ -85,34 +67,23 @@ public class Main {
 
                     if (withdraw <= 0) {
                         System.out.println("Invalid amount!");
-                    } else if (withdraw > balance) {
+                    } else if (withdraw > account.getBalance()) {
                         System.out.println("Insufficient balance!");
                     } else {
-                        balance -= withdraw;
-                        System.out.println("Withdrawal successful!");
-                        System.out.println("New Balance: $" + balance);
-
-                        transactionHistory.add(
-                                "Withdrawn: " + withdraw + "$"
-                        );
+                        account.withdraw(withdraw);
                     }
-
                     break;
                 }
                 case 4: {
                     System.out.print("Enter current PIN: ");
                     int oldPin = scn.nextInt();
 
-                    if (oldPin == correctPin) {
+                    if (oldPin == account.getPin()) {
 
                         System.out.print("Enter new PIN: ");
                         int newPin = scn.nextInt();
 
-                        correctPin = newPin;
-
-                        transactionHistory.add(
-                                "PIN changed: "
-                        );
+                        account.changePin(newPin);
 
                         System.out.println("PIN changed successfully!");
 
@@ -123,11 +94,11 @@ public class Main {
                     break;
                 }
                 case 5: {
-                    if (transactionHistory.isEmpty()) {
+                    if (account.getTransactiopnHistory().isEmpty()) {
                         System.out.println("No transaction found.");
                     } else {
                         System.out.println("\n===== TRANSACTION HISTORY =====");
-                        for (String history : transactionHistory) {
+                        for (String history : account.getTransactiopnHistory()) {
                             System.out.println(history);
                         }
                     }
@@ -142,6 +113,6 @@ public class Main {
             }
 
 
-        } while (choice != 4);
+        } while (choice != 6);
     }
 }
