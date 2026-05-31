@@ -5,16 +5,35 @@ public class Main {
         Scanner scn = new Scanner(System.in);
 
         int correctPin = 2019;
+        int attemps = 0;
+        boolean blocked = false;
+
         double balance = 10000.00;
 
-        System.out.print("Enter your PIN: ");
-        int enterPin = scn.nextInt();
+        // Authentication
+        while (attemps < 3) {
+            System.out.print("Enter your PIN: ");
+            int enterPin = scn.nextInt();
 
-        if (enterPin != correctPin) {
-            System.out.println("Incorrect PIN!");
+            if (enterPin == correctPin) {
+                System.out.println("Login successful!");
+                break;
+            } else {
+                attemps++;
+                System.out.println("Incorrect PIN! Attempt: " + attemps);
+            }
+        }
+        // Block account
+        if (attemps == 3) {
+            blocked = true;
+        }
+
+        if (blocked) {
+            System.out.println("Your account has been blocked!");
             scn.close();
             return;
         }
+
 
         System.out.println("Login succesful");
 
