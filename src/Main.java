@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -9,6 +10,8 @@ public class Main {
         boolean blocked = false;
 
         double balance = 10000.00;
+
+        ArrayList<String> transactionHistory = new ArrayList<>();
 
         // Authentication
         while (attemps < 3) {
@@ -45,7 +48,8 @@ public class Main {
             System.out.println("1. Check Balance");
             System.out.println("2. Deposit Money");
             System.out.println("3. Withdraw Money");
-            System.out.println("4. Exit");
+            System.out.println("4. Change PIN");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
             choice = scn.nextInt();
@@ -86,6 +90,29 @@ public class Main {
                     break;
                 }
                 case 4: {
+                    System.out.print("Enter current PIN: ");
+                    int oldPin = scn.nextInt();
+
+                    if (oldPin == correctPin) {
+
+                        System.out.print("Enter new PIN: ");
+                        int newPin = scn.nextInt();
+
+                        correctPin = newPin;
+
+                        transactionHistory.add(
+                                "PIN changed"
+                        );
+
+                        System.out.println("PIN changed successfully!");
+
+                    } else {
+                        System.out.println("Incorrect current PIN!");
+                    }
+
+                    break;
+                }
+                case 5: {
                     System.out.println("Thank you for using ATM.");
                     break;
                 }
