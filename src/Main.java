@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -9,6 +10,8 @@ public class Main {
         boolean blocked = false;
 
         double balance = 10000.00;
+
+        ArrayList<String> transactionHistory = new ArrayList<>();
 
         // Authentication
         while (attemps < 3) {
@@ -46,7 +49,8 @@ public class Main {
             System.out.println("2. Deposit Money");
             System.out.println("3. Withdraw Money");
             System.out.println("4. Change PIN");
-            System.out.println("5. Exit");
+            System.out.println("5. Transaction History");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             choice = scn.nextInt();
@@ -64,6 +68,11 @@ public class Main {
                         balance += deposit;
                         System.out.println("Money deposited successfully!");
                         System.out.println("New Balance: $" + balance);
+
+                        transactionHistory.add(
+                                "Deposited: " + deposit + "$"
+                        );
+
                     } else {
                         System.out.println("Invalid amount!");
                     }
@@ -82,6 +91,10 @@ public class Main {
                         balance -= withdraw;
                         System.out.println("Withdrawal successful!");
                         System.out.println("New Balance: $" + balance);
+
+                        transactionHistory.add(
+                                "Withdrawn: " + withdraw + "$"
+                        );
                     }
 
                     break;
@@ -97,6 +110,10 @@ public class Main {
 
                         correctPin = newPin;
 
+                        transactionHistory.add(
+                                "PIN changed: "
+                        );
+
                         System.out.println("PIN changed successfully!");
 
                     } else {
@@ -106,6 +123,17 @@ public class Main {
                     break;
                 }
                 case 5: {
+                    if (transactionHistory.isEmpty()) {
+                        System.out.println("No transaction found.");
+                    } else {
+                        System.out.println("\n===== TRANSACTION HISTORY =====");
+                        for (String history : transactionHistory) {
+                            System.out.println(history);
+                        }
+                    }
+                    break;
+                }
+                case 6: {
                     System.out.println("Thank you for using ATM.");
                     break;
                 }
