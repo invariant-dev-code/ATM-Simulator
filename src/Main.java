@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -10,8 +9,6 @@ public class Main {
         boolean blocked = false;
 
         double balance = 10000.00;
-
-        ArrayList<String> transactionHistory = new ArrayList<>();
 
         // Authentication
         while (attemps < 3) {
@@ -99,10 +96,6 @@ public class Main {
                         int newPin = scn.nextInt();
 
                         correctPin = newPin;
-
-                        transactionHistory.add(
-                                "PIN changed"
-                        );
 
                         System.out.println("PIN changed successfully!");
 
